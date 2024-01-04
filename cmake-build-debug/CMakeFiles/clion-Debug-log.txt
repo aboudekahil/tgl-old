@@ -1,4 +1,13 @@
 C:\Windows\system32\wsl.exe --distribution Arch --exec /bin/fish -c "export PATH=\"/usr/bin:$PATH\" && export CMAKE_COLOR_DIAGNOSTICS=ON && export CLION_IDE=TRUE && export JETBRAINS_IDE=TRUE && cd /home/aboude/projects/cpp/tgl/cmake-build-debug && /usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/usr/bin/ninja -DCMAKE_C_COMPILER=gcc '-DCMAKE_CXX_COMPILER=g++' -G Ninja -S /home/aboude/projects/cpp/tgl -B /home/aboude/projects/cpp/tgl/cmake-build-debug"
 -- Configuring done (0.0s)
--- Generating done (0.0s)
--- Build files have been written to: /home/aboude/projects/cpp/tgl/cmake-build-debug
+CMake Error at CMakeLists.txt:6 (add_library):
+  Cannot find source file:
+
+    library.cpp
+
+
+CMake Error at CMakeLists.txt:6 (add_library):
+  No SOURCES given to target: tgl
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.
