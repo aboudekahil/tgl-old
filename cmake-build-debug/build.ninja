@@ -49,17 +49,23 @@ cmake_ninja_workdir = /home/aboude/projects/cpp/tgl/cmake-build-debug/
 
 build cmake_object_order_depends_target_tgl: phony || CMakeFiles/tgl.dir
 
-build CMakeFiles/tgl.dir/library.cpp.o: CXX_COMPILER__tgl_unscanned_Debug /home/aboude/projects/cpp/tgl/library.cpp || cmake_object_order_depends_target_tgl
-  DEP_FILE = CMakeFiles/tgl.dir/library.cpp.o.d
-  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles/tgl.dir
-  OBJECT_FILE_DIR = CMakeFiles/tgl.dir
-
 build CMakeFiles/tgl.dir/src/tgl.cpp.o: CXX_COMPILER__tgl_unscanned_Debug /home/aboude/projects/cpp/tgl/src/tgl.cpp || cmake_object_order_depends_target_tgl
   DEP_FILE = CMakeFiles/tgl.dir/src/tgl.cpp.o.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/tgl.dir
   OBJECT_FILE_DIR = CMakeFiles/tgl.dir/src
+
+build CMakeFiles/tgl.dir/src/internal/internal.cpp.o: CXX_COMPILER__tgl_unscanned_Debug /home/aboude/projects/cpp/tgl/src/internal/internal.cpp || cmake_object_order_depends_target_tgl
+  DEP_FILE = CMakeFiles/tgl.dir/src/internal/internal.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/tgl.dir
+  OBJECT_FILE_DIR = CMakeFiles/tgl.dir/src/internal
+
+build CMakeFiles/tgl.dir/src/colors/tgl_colors.cpp.o: CXX_COMPILER__tgl_unscanned_Debug /home/aboude/projects/cpp/tgl/src/colors/tgl_colors.cpp || cmake_object_order_depends_target_tgl
+  DEP_FILE = CMakeFiles/tgl.dir/src/colors/tgl_colors.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/tgl.dir
+  OBJECT_FILE_DIR = CMakeFiles/tgl.dir/src/colors
 
 
 # =============================================================================
@@ -69,13 +75,62 @@ build CMakeFiles/tgl.dir/src/tgl.cpp.o: CXX_COMPILER__tgl_unscanned_Debug /home/
 #############################################
 # Link the static library libtgl.a
 
-build libtgl.a: CXX_STATIC_LIBRARY_LINKER__tgl_Debug CMakeFiles/tgl.dir/library.cpp.o CMakeFiles/tgl.dir/src/tgl.cpp.o
+build libtgl.a: CXX_STATIC_LIBRARY_LINKER__tgl_Debug CMakeFiles/tgl.dir/src/tgl.cpp.o CMakeFiles/tgl.dir/src/internal/internal.cpp.o CMakeFiles/tgl.dir/src/colors/tgl_colors.cpp.o
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles/tgl.dir
   POST_BUILD = :
   PRE_LINK = :
   TARGET_FILE = libtgl.a
   TARGET_PDB = tgl.a.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target main
+
+
+#############################################
+# Order-only phony target for main
+
+build cmake_object_order_depends_target_main: phony || CMakeFiles/main.dir
+
+build CMakeFiles/main.dir/test/main.cpp.o: CXX_COMPILER__main_unscanned_Debug /home/aboude/projects/cpp/tgl/test/main.cpp || cmake_object_order_depends_target_main
+  DEP_FILE = CMakeFiles/main.dir/test/main.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/main.dir
+  OBJECT_FILE_DIR = CMakeFiles/main.dir/test
+
+build CMakeFiles/main.dir/src/tgl.cpp.o: CXX_COMPILER__main_unscanned_Debug /home/aboude/projects/cpp/tgl/src/tgl.cpp || cmake_object_order_depends_target_main
+  DEP_FILE = CMakeFiles/main.dir/src/tgl.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/main.dir
+  OBJECT_FILE_DIR = CMakeFiles/main.dir/src
+
+build CMakeFiles/main.dir/src/internal/internal.cpp.o: CXX_COMPILER__main_unscanned_Debug /home/aboude/projects/cpp/tgl/src/internal/internal.cpp || cmake_object_order_depends_target_main
+  DEP_FILE = CMakeFiles/main.dir/src/internal/internal.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/main.dir
+  OBJECT_FILE_DIR = CMakeFiles/main.dir/src/internal
+
+build CMakeFiles/main.dir/src/colors/tgl_colors.cpp.o: CXX_COMPILER__main_unscanned_Debug /home/aboude/projects/cpp/tgl/src/colors/tgl_colors.cpp || cmake_object_order_depends_target_main
+  DEP_FILE = CMakeFiles/main.dir/src/colors/tgl_colors.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/main.dir
+  OBJECT_FILE_DIR = CMakeFiles/main.dir/src/colors
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target main
+
+
+#############################################
+# Link the executable main
+
+build main: CXX_EXECUTABLE_LINKER__main_Debug CMakeFiles/main.dir/test/main.cpp.o CMakeFiles/main.dir/src/tgl.cpp.o CMakeFiles/main.dir/src/internal/internal.cpp.o CMakeFiles/main.dir/src/colors/tgl_colors.cpp.o
+  FLAGS = -g
+  OBJECT_DIR = CMakeFiles/main.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = main
+  TARGET_PDB = main.dbg
 
 
 #############################################
@@ -114,7 +169,7 @@ build tgl: phony libtgl.a
 #############################################
 # Folder: /home/aboude/projects/cpp/tgl/cmake-build-debug
 
-build all: phony libtgl.a
+build all: phony libtgl.a main
 
 # =============================================================================
 # Built-in targets

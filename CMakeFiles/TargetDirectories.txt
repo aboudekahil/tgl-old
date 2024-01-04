@@ -1,0 +1,4 @@
+/home/aboude/projects/cpp/tgl/CMakeFiles/tgl.dir
+/home/aboude/projects/cpp/tgl/CMakeFiles/main.dir
+/home/aboude/projects/cpp/tgl/CMakeFiles/edit_cache.dir
+/home/aboude/projects/cpp/tgl/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,2 @@
+/usr/sbin/ar qc libtgl.a CMakeFiles/tgl.dir/src/tgl.cpp.o CMakeFiles/tgl.dir/src/internal/internal.cpp.o
+/usr/sbin/ranlib libtgl.a

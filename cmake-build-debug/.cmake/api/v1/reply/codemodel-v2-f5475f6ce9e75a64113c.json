@@ -15,7 +15,8 @@
 					"source" : ".",
 					"targetIndexes" : 
 					[
-						0
+						0,
+						1
 					]
 				}
 			],
@@ -30,7 +31,8 @@
 					"name" : "tgl",
 					"targetIndexes" : 
 					[
-						0
+						0,
+						1
 					]
 				}
 			],
@@ -38,8 +40,15 @@
 			[
 				{
 					"directoryIndex" : 0,
+					"id" : "main::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-main-Debug-362580096d4cee66cb25.json",
+					"name" : "main",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
 					"id" : "tgl::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-tgl-Debug-eef65189a96187958054.json",
+					"jsonFile" : "target-tgl-Debug-f713d977707baa280e6a.json",
 					"name" : "tgl",
 					"projectIndex" : 0
 				}
