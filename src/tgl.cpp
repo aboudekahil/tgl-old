@@ -1,6 +1,29 @@
-//
-// Created by aboud on 1/4/2024.
-//
+/**
+ * @copyright
+ * MIT License
+ * Copyright (c) 2024 aboude
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * @author
+ * ABOUDE KAHIL
+ *
+ * @date
+ * 1/10/2024
+*/
 
 #include <cmath>
 #include "tgl.h"
@@ -10,14 +33,12 @@ namespace tgl {
     Screen::Screen()
             : _term_size(get_term_size()),
               buffer(_term_size.height, std::vector<TPixel>(_term_size.width)),
-              buffer2(_term_size.height, std::vector<TPixel>(_term_size.width))
-              {}
+              buffer2(_term_size.height, std::vector<TPixel>(_term_size.width)) {}
 
     Screen::Screen(size_t width, size_t height)
             : _term_size({.width = width, .height = height}),
               buffer(_term_size.height, std::vector<TPixel>(_term_size.width)),
-              buffer2(_term_size.height, std::vector<TPixel>(_term_size.width))
-              {}
+              buffer2(_term_size.height, std::vector<TPixel>(_term_size.width)) {}
 
     void Screen::fill(const TPixel &pixel) {
         buffer = std::vector<std::vector<TPixel>>(
@@ -40,7 +61,7 @@ namespace tgl {
     void Screen::showCursor() { internal::show_cursor(); }
 
     void Screen::drawPixel(float x, float y, TPixel pixel) {
-        int ix = std::round(x), iy = std::round(y);
+        int ix = static_cast<int>(std::round(x)), iy = static_cast<int>(std::round(y));
         if (ix < 0 || ix >= buffer[0].size() || iy < 0 || iy >= buffer.size())
             return;
 
@@ -102,6 +123,7 @@ namespace tgl {
     size_t Screen::get_width() const {
         return _term_size.width;
     }
+
     size_t Screen::get_height() const {
         return _term_size.height;
     }

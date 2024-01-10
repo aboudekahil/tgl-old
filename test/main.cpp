@@ -1,7 +1,4 @@
 #include "../src/tgl.h"
-#include <unistd.h>
-#include <cmath>
-#include <valarray>
 
 typedef struct p {
     tgl::TPixel v;
