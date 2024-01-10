@@ -45,3 +45,6 @@ cmake-build-debug/CMakeFiles/3.28.1/CompilerIdCXX/a.out
 cmake-build-debug/main
 CMakeFiles/3.28.1/CMakeDetermineCompilerABI_C.bin
 CMakeFiles/3.28.1/CMakeDetermineCompilerABI_CXX.bin
+
+CMakeLists.txt
+cmake-build-debug/CMakeFiles/3.28.1/CMakeDetermineCompilerABI_C.bin
