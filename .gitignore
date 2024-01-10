@@ -30,5 +30,18 @@
 *.exe
 *.out
 *.app
+*.bin
 
 .idea/
+cmake-build-debug/
+*.bin
+*.out
+cmake-build-debug/main
+CMakeFiles/
+cmake-build-debug/CMakeFiles/3.28.1/CMakeDetermineCompilerABI_C.bin
+cmake-build-debug/CMakeFiles/3.28.1/CMakeDetermineCompilerABI_CXX.bin
+cmake-build-debug/CMakeFiles/3.28.1/CompilerIdC/a.out
+cmake-build-debug/CMakeFiles/3.28.1/CompilerIdCXX/a.out
+cmake-build-debug/main
+CMakeFiles/3.28.1/CMakeDetermineCompilerABI_C.bin
+CMakeFiles/3.28.1/CMakeDetermineCompilerABI_CXX.bin
