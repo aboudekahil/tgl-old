@@ -1,6 +1,29 @@
-//
-// Created by aboud on 1/4/2024.
-//
+/**
+ * @copyright
+ * MIT License
+ * Copyright (c) 2024 aboude
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * @author
+ * ABOUDE KAHIL
+ *
+ * @date
+ * 1/10/2024
+*/
 
 #include <cstdlib>
 #include <iostream>
@@ -11,9 +34,9 @@ namespace tgl::internal {
         wsize_t window_size{};
 #if defined(__WIN32__)
         CONSOLE_SCREEN_BUFFER_INFO csbi;
-  GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-  window_size.width = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-  window_size.height = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+        GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+        window_size.width = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+        window_size.height = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 #elif defined(linux) || defined(__unix__)
         struct winsize w{};
         ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
@@ -32,7 +55,24 @@ namespace tgl::internal {
 #endif
     }
 
-    void hide_cursor() { std::cout << "\033[?25l"; }
+    void hide_cursor() {
+#if defined(__WIN32__) || defined(_WIN32) || _WIN32
+
+        HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+        if (consoleHandle == INVALID_HANDLE_VALUE) {
+            return; // Handle error appropriately
+        }
+
+        CONSOLE_CURSOR_INFO info = {0};
+        info.dwSize = 100;  // The size of the cursor, from 1 to 100. The default is 25.
+        info.bVisible = FALSE;  // Set the cursor visibility to FALSE (hidden)
+        SetConsoleCursorInfo(consoleHandle, &info);
+
+#elif defined(linux) || defined(__unix__)
+
+        std::cout << "\033[?25l";
+#endif
+    }
 
     void show_cursor() { std::cout << "\033[?25h"; }
 

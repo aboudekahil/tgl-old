@@ -37,12 +37,21 @@ namespace tgl {
         void draw();
 
         void drawLine(float x1, float y1, float x2, float y2, const TPixel &pixel);
+        void drawRect(float x, float y, float w, float h, const TPixel &pixel);
+
+        size_t get_width() const;
+
+        size_t get_height() const;
+
+        void swap_buffers();
 
     private:
         void drawBuffer() const;
 
         wsize_t _term_size;
         std::vector <std::vector<TPixel>> buffer;
+        std::vector <std::vector<TPixel>> buffer2;
+
     };
 
 }

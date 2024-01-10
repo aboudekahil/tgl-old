@@ -9,11 +9,15 @@ namespace tgl {
 
     Screen::Screen()
             : _term_size(get_term_size()),
-              buffer(_term_size.height, std::vector<TPixel>(_term_size.width)) {}
+              buffer(_term_size.height, std::vector<TPixel>(_term_size.width)),
+              buffer2(_term_size.height, std::vector<TPixel>(_term_size.width))
+              {}
 
     Screen::Screen(size_t width, size_t height)
             : _term_size({.width = width, .height = height}),
-              buffer(_term_size.height, std::vector<TPixel>(_term_size.width)) {}
+              buffer(_term_size.height, std::vector<TPixel>(_term_size.width)),
+              buffer2(_term_size.height, std::vector<TPixel>(_term_size.width))
+              {}
 
     void Screen::fill(const TPixel &pixel) {
         buffer = std::vector<std::vector<TPixel>>(
@@ -50,32 +54,60 @@ namespace tgl {
     }
 
     void Screen::drawLine(float x1, float y1, float x2, float y2, const TPixel &pixel) {
-        float maxx = std::max(x1, x2), minx = std::min(x2, x1);
-        x1 = minx;
-        x2 = maxx;
-
-        float maxy = std::max(y1, y2), miny = std::min(y1, y2);
-        y1 = miny;
-        y2 = maxy;
-
-        float dx = x2 - x1;
-        float dy = y2 - y1;
-        float D = 2 * dy - dx;
-        float y = y1;
-
-        for (float x = x1; x < x2; x++) {
-            int ix = std::floor(x), iy = std::floor(y);
-
-            if (!(ix < 0 || ix >= buffer[0].size() || iy < 0 || iy >= buffer.size()))
-                buffer[iy][ix] = pixel;
-
-            if (D > 0) {
-                y++;
-                D -= 2 * dx;
-            }
-            D += 2 * dy;
+        bool steep = std::abs(y2 - y1) > std::abs(x2 - x1);
+        if (steep) {
+            std::swap(x1, y1);
+            std::swap(x2, y2);
         }
 
+        if (x1 > x2) {
+            std::swap(x1, x2);
+            std::swap(y1, y2);
+        }
+
+        float dx = x2 - x1;
+        float dy = std::abs(y2 - y1);
+        float error = dx / 2.0f;
+        int ystep = (y1 < y2) ? 1 : -1;
+        int y = (int) y1;
+
+        const int maxX = (int) x2;
+
+        for (int x = (int) x1; x <= maxX; x++) {
+            if (steep) {
+                if (y >= 0 && y < buffer[0].size() && x >= 0 && x < buffer.size()) {
+                    buffer[x][y] = pixel;
+                }
+            } else {
+                if (x >= 0 && x < buffer[0].size() && y >= 0 && y < buffer.size()) {
+                    buffer[y][x] = pixel;
+                }
+            }
+
+            error -= dy;
+            if (error < 0) {
+                y += ystep;
+                error += dx;
+            }
+        }
+    }
+
+    void Screen::drawRect(float x, float y, float w, float h, const TPixel &pixel) {
+        drawLine(x, y, x + w, y, pixel);
+        drawLine(x, y, x, y + h, pixel);
+        drawLine(x, y + h, x + w, y + h, pixel);
+        drawLine(x + w, y, x + w, y + h, pixel);
+    }
+
+    size_t Screen::get_width() const {
+        return _term_size.width;
+    }
+    size_t Screen::get_height() const {
+        return _term_size.height;
+    }
+
+    void Screen::swap_buffers() {
+        std::swap(buffer, buffer2);
     }
 
 }
