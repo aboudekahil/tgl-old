@@ -78,7 +78,8 @@ namespace tgl::colors {
          * @return
          * The appropriate ANSI Escape character.
          */
-        std::string get_bg_color(colors::BG bgColors) {
+        constexpr std::string get_bg_color(colors::BG bgColors) {
+
             switch (bgColors) {
                 case colors::BG::BLACK:
                     return "\033[40m";
@@ -109,7 +110,7 @@ namespace tgl::colors {
          * @return
          * The appropriate ANSI Escape character.
          */
-        std::string get_fg_color(colors::FG fgColors) {
+        constexpr std::string get_fg_color(colors::FG fgColors) {
             switch (fgColors) {
                 case colors::FG::BLACK:
                     return "\033[30m";

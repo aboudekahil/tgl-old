@@ -112,7 +112,7 @@ namespace tgl {
          * @param y the pixel's y position.
          * @param pixel the pixel that will be drawn.
          */
-        void drawPixel(float x, float y, TPixel pixel);
+        void drawPixel(float x, float y, const TPixel& pixel);
 
         /**
          * @method

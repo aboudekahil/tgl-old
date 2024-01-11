@@ -60,7 +60,7 @@ namespace tgl {
 
     void Screen::showCursor() { internal::show_cursor(); }
 
-    void Screen::drawPixel(float x, float y, TPixel pixel) {
+    void Screen::drawPixel(float x, float y, const TPixel& pixel) {
         int ix = static_cast<int>(std::round(x)), iy = static_cast<int>(std::round(y));
         if (ix < 0 || ix >= buffer[0].size() || iy < 0 || iy >= buffer.size())
             return;
