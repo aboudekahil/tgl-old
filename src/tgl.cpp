@@ -120,15 +120,15 @@ namespace tgl {
         drawLine(x + w, y, x + w, y + h, pixel);
     }
 
-    size_t Screen::get_width() const {
+    size_t Screen::width() const {
         return _term_size.width;
     }
 
-    size_t Screen::get_height() const {
+    size_t Screen::height() const {
         return _term_size.height;
     }
 
-    void Screen::swap_buffers() {
+    void Screen::swapBuffers() {
         std::swap(buffer, buffer2);
     }
 

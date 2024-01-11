@@ -64,10 +64,10 @@ namespace tgl::internal {
      * std::cout << "Terminal height: " << window_size.height << std::endl;
      * @endcode
      */
-    using wsize_t = struct {
+    typedef struct {
         size_t width;
         size_t height;
-    };
+    } wsize_t;
 
     /**
      * @function

@@ -56,11 +56,11 @@ namespace tgl {
      *  }; // red background black text with 'a' character pixel.
      * @endcode
      */
-    using TPixel = struct {
+    typedef struct {
         colors::FG_COLORS fg;
         colors::BG_COLORS bg;
         char pixel;
-    };
+    } TPixel;
 
     /**
      * @class
@@ -150,7 +150,7 @@ namespace tgl {
          * Width of screen.
          */
         [[nodiscard]]
-        size_t get_width() const;
+        size_t width() const;
 
         /**
          * @method
@@ -158,13 +158,13 @@ namespace tgl {
          * Height of screen.
          */
         [[nodiscard]]
-        size_t get_height() const;
+        size_t height() const;
 
         /**
          * @method
          * swaps the internal buffers.
          */
-        void swap_buffers();
+        void swapBuffers();
 
     private:
         /**
