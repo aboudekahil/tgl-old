@@ -13,32 +13,32 @@ int main() {
     int i = 0;
     while (i < 100) {
         screen.fill(TPixel{
-                .fg=colors::FG_COLORS::FG_BLACK,
-                .bg=colors::BG_COLORS::BG_BLACK,
+                .fg=colors::FG::BLACK,
+                .bg=colors::BG::BLACK,
                 .pixel=' '
         });
 
         // Big red line -------------------------------------------
         screen.drawLine(0, 0, screen.width(), screen.height(), TPixel{
-                .fg=colors::FG_COLORS::FG_RED,
-                .bg=colors::BG_COLORS::BG_BLACK,
+                .fg=colors::FG::RED,
+                .bg=colors::BG::BLACK,
                 .pixel='@',
         });
 
         // Triangle with lines -------------------------------------
         screen.drawLine(screen.width() / 3, screen.height() / 4, screen.width() / 4, screen.height() / 2, TPixel{
-                .fg=colors::FG_COLORS::FG_GREEN,
-                .bg=colors::BG_COLORS::BG_BLACK,
+                .fg=colors::FG::GREEN,
+                .bg=colors::BG::BLACK,
                 .pixel='@',
         });
         screen.drawLine(screen.width() / 3, screen.height() / 4, screen.width() / 2.5, screen.height() / 2, TPixel{
-                .fg=colors::FG_COLORS::FG_GREEN,
-                .bg=colors::BG_COLORS::BG_BLACK,
+                .fg=colors::FG::GREEN,
+                .bg=colors::BG::BLACK,
                 .pixel='@',
         });
         screen.drawLine(screen.width() / 4, screen.height() / 2, screen.width() / 2.5, screen.height() / 2, TPixel{
-                .fg=colors::FG_COLORS::FG_GREEN,
-                .bg=colors::BG_COLORS::BG_BLACK,
+                .fg=colors::FG::GREEN,
+                .bg=colors::BG::BLACK,
                 .pixel='@',
         });
 

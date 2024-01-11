@@ -42,30 +42,30 @@ namespace tgl::colors {
      * @enum
      * Foreground terminal colors.
      */
-    enum class FG_COLORS {
-        FG_DEFAULT,
+    enum class FG {
+        DEFAULT,
 
-        FG_RED,
-        FG_BLUE,
-        FG_GREEN,
+        RED,
+        BLUE,
+        GREEN,
 
-        FG_BLACK,
-        FG_WHITE,
+        BLACK,
+        WHITE,
     };
 
     /**
      * @enum
      * Background terminal colors.
      */
-    enum class BG_COLORS {
-        BG_DEFAULT,
+    enum class BG {
+        DEFAULT,
 
-        BG_RED,
-        BG_BLUE,
-        BG_GREEN,
+        RED,
+        BLUE,
+        GREEN,
 
-        BG_BLACK,
-        BG_WHITE,
+        BLACK,
+        WHITE,
     };
 
 
@@ -78,25 +78,25 @@ namespace tgl::colors {
          * @return
          * The appropriate ANSI Escape character.
          */
-        std::string get_bg_color(colors::BG_COLORS bgColors) {
+        std::string get_bg_color(colors::BG bgColors) {
             switch (bgColors) {
-                case colors::BG_COLORS::BG_BLACK:
+                case colors::BG::BLACK:
                     return "\033[40m";
 
-                case colors::BG_COLORS::BG_WHITE:
+                case colors::BG::WHITE:
                     return "\033[107m";
 
-                case colors::BG_COLORS::BG_RED:
+                case colors::BG::RED:
                     return "\033[41m";
 
-                case colors::BG_COLORS::BG_BLUE:
+                case colors::BG::BLUE:
                     return "\033[44m";
 
-                case colors::BG_COLORS::BG_GREEN:
+                case colors::BG::GREEN:
                     return "\033[42m";
 
                 default:
-                case colors::BG_COLORS::BG_DEFAULT:
+                case colors::BG::DEFAULT:
                     return "\033[49m";
             }
         }
@@ -109,25 +109,25 @@ namespace tgl::colors {
          * @return
          * The appropriate ANSI Escape character.
          */
-        std::string get_fg_color(colors::FG_COLORS fgColors) {
+        std::string get_fg_color(colors::FG fgColors) {
             switch (fgColors) {
-                case colors::FG_COLORS::FG_BLACK:
+                case colors::FG::BLACK:
                     return "\033[30m";
 
-                case colors::FG_COLORS::FG_WHITE:
+                case colors::FG::WHITE:
                     return "\033[97m";
 
-                case colors::FG_COLORS::FG_RED:
+                case colors::FG::RED:
                     return "\033[31m";
 
-                case colors::FG_COLORS::FG_BLUE:
+                case colors::FG::BLUE:
                     return "\033[34m";
 
-                case colors::FG_COLORS::FG_GREEN:
+                case colors::FG::GREEN:
                     return "\033[32m";
 
                 default:
-                case colors::FG_COLORS::FG_DEFAULT:
+                case colors::FG::DEFAULT:
                     return "\033[39m";
             }
         }
@@ -141,7 +141,7 @@ namespace tgl::colors {
      * @param fgColors foreground color
      * @return output stream
      */
-    std::ostream &operator<<(std::ostream &out, FG_COLORS fgColors);
+    std::ostream &operator<<(std::ostream &out, FG fgColors);
 
     /**
      * @operator
@@ -151,7 +151,7 @@ namespace tgl::colors {
      * @param bgColors foreground color
      * @return output stream
      */
-    std::ostream &operator<<(std::ostream &out, BG_COLORS bgColors);
+    std::ostream &operator<<(std::ostream &out, BG bgColors);
 } // namespace tgl::colors
 
 #endif //TGL_TGL_COLORS_H

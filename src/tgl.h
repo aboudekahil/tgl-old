@@ -50,15 +50,15 @@ namespace tgl {
      * @code
      * using namespace tgl;
      * auto red_black_a = TPixel{
-     *  .fg=colors::FG_COLORS::FG_BLACK,
-     *  .bg=colors::BG_COLORS:BG_RED,
+     *  .fg=colors::FG::BLACK,
+     *  .bg=colors::BG:RED,
      *  .pixel='a'
      *  }; // red background black text with 'a' character pixel.
      * @endcode
      */
     typedef struct {
-        colors::FG_COLORS fg;
-        colors::BG_COLORS bg;
+        colors::FG fg;
+        colors::BG bg;
         char pixel;
     } TPixel;
 

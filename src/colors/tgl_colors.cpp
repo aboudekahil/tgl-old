@@ -30,13 +30,13 @@
 
 namespace tgl::colors {
 
-    std::ostream &operator<<(std::ostream &out, FG_COLORS fgColors) {
+    std::ostream &operator<<(std::ostream &out, FG fgColors) {
         out << get_fg_color(fgColors);
         return out;
     }
 
 
-    std::ostream &operator<<(std::ostream &out, BG_COLORS bgColors) {
+    std::ostream &operator<<(std::ostream &out, BG bgColors) {
         out << get_bg_color(bgColors);
         return out;
     }
