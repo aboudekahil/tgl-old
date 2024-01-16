@@ -168,12 +168,24 @@ namespace tgl {
 
     private:
         /**
+         * @method
+         * Only draws a straight line, as in either x1 == x2 or y1 == y2.
          *
+         * @param x1 The starting x position for the line.
+         * @param y1 The starting y position for the line.
+         * @param x2 The ending x position for the line.
+         * @param y2 The ending y position for the line.
+         * @param pixel The pixel the line will be filled with.
          */
         void drawStraightLine(float x1, float y1, float x2, float y2, const TPixel &pixel);
 
         /**
+         * @method
+         * Draws a pixel on a certain position in the screen.
          *
+         * @param x the pixel's x position.
+         * @param y the pixel's y position.
+         * @param pixel the pixel that will be drawn.
          */
         void putPixel(size_t x, size_t y, const TPixel &pixel);
 

@@ -16,8 +16,9 @@ All the examples are inside the `examples/` directory.
 
 Available examples:
 
-- `Redline/`: A big red line rendered from top left ot bottom right,
+- `redline/`: A big red line rendered from top left ot bottom right,
   with a green triangle intersecting with the line.
+- `rectangle/`: 2 rectangles
 
 ## Screenshots
 
