@@ -112,7 +112,7 @@ namespace tgl {
          * @param y the pixel's y position.
          * @param pixel the pixel that will be drawn.
          */
-        void drawPixel(float x, float y, const TPixel& pixel);
+        void drawPixel(float x, float y, const TPixel &pixel);
 
         /**
          * @method
@@ -167,6 +167,16 @@ namespace tgl {
         void swapBuffers();
 
     private:
+        /**
+         *
+         */
+        void drawStraightLine(float x1, float y1, float x2, float y2, const TPixel &pixel);
+
+        /**
+         *
+         */
+        void putPixel(size_t x, size_t y, const TPixel &pixel);
+
         /**
          * @method
          * Draws the current buffer on the screen.

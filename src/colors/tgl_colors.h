@@ -78,7 +78,7 @@ namespace tgl::colors {
          * @return
          * The appropriate ANSI Escape character.
          */
-        constexpr std::string get_bg_color(colors::BG bgColors) {
+        constexpr std::string_view get_bg_color(colors::BG bgColors) {
 
             switch (bgColors) {
                 case colors::BG::BLACK:

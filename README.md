@@ -22,6 +22,7 @@ Available examples:
 ## Screenshots
 
 ![App Screenshot](./screenshots/Triangle.png)
+![App Screenshot](./screenshots/Rectangle.png)
 
 ## Features
 

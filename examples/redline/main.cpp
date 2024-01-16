@@ -44,7 +44,7 @@ int main() {
 
         screen.draw();
         screen.swapBuffers();
-        usleep(1000000/60); // 60 fps
+        usleep(1000000 / 60); // 60 fps
         i++;
     }
 

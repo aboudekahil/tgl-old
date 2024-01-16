@@ -60,12 +60,9 @@ namespace tgl {
 
     void Screen::showCursor() { internal::show_cursor(); }
 
-    void Screen::drawPixel(float x, float y, const TPixel& pixel) {
-        int ix = static_cast<int>(std::round(x)), iy = static_cast<int>(std::round(y));
-        if (ix < 0 || ix >= buffer[0].size() || iy < 0 || iy >= buffer.size())
-            return;
-
-        buffer[iy][ix] = pixel;
+    void Screen::drawPixel(float x, float y, const TPixel &pixel) {
+        int ix = static_cast<int>(x), iy = static_cast<int>(y);
+        putPixel(ix, iy, pixel);
     }
 
     void Screen::draw() {
@@ -90,19 +87,15 @@ namespace tgl {
         float dy = std::abs(y2 - y1);
         float error = dx / 2.0f;
         int ystep = (y1 < y2) ? 1 : -1;
-        int y = (int) y1;
+        int y = static_cast<int>(y1);
 
-        const int maxX = (int) x2;
+        const int maxX = static_cast<int>(x2);
 
-        for (int x = (int) x1; x <= maxX; x++) {
+        for (int x = static_cast<int>(x1); x <= maxX; x++) {
             if (steep) {
-                if (y >= 0 && y < buffer[0].size() && x >= 0 && x < buffer.size()) {
-                    buffer[x][y] = pixel;
-                }
+                putPixel(y, x, pixel);
             } else {
-                if (x >= 0 && x < buffer[0].size() && y >= 0 && y < buffer.size()) {
-                    buffer[y][x] = pixel;
-                }
+                putPixel(x, y, pixel);
             }
 
             error -= dy;
@@ -114,10 +107,10 @@ namespace tgl {
     }
 
     void Screen::drawRect(float x, float y, float w, float h, const TPixel &pixel) {
-        drawLine(x, y, x + w, y, pixel);
-        drawLine(x, y, x, y + h, pixel);
-        drawLine(x, y + h, x + w, y + h, pixel);
-        drawLine(x + w, y, x + w, y + h, pixel);
+        drawStraightLine(x, y, x + w, y, pixel);
+        drawStraightLine(x, y, x, y + h, pixel);
+        drawStraightLine(x, y + h, x + w, y + h, pixel);
+        drawStraightLine(x + w, y, x + w, y + h, pixel);
     }
 
     size_t Screen::width() const {
@@ -130,6 +123,29 @@ namespace tgl {
 
     void Screen::swapBuffers() {
         std::swap(buffer, buffer2);
+    }
+
+    void Screen::drawStraightLine(float x1, float y1, float x2, float y2, const TPixel &pixel) {
+        if (x1 == x2) {
+            int ix = static_cast<int>(x1);
+            int iy2 = static_cast<int>(y2);
+            for (int y = static_cast<int>(y1); y <= iy2; ++y) {
+                putPixel(ix, y, pixel);
+            }
+        } else if (y1 == y2) {
+            int iy = static_cast<int>(y1);
+            int ix2 = static_cast<int>(x2);
+            for (int x = static_cast<int>(x1); x <= ix2; ++x) {
+                putPixel(x, iy, pixel);
+            }
+        }
+    }
+
+    void Screen::putPixel(size_t x, size_t y, const TPixel &pixel) {
+        if (x >= buffer[0].size() || y >= buffer.size())
+            return;
+
+        buffer[y][x] = pixel;
     }
 
 }
