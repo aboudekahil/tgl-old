@@ -1,6 +1,6 @@
 # Tgl
 
-An open source simple terminal rendering library for c++.
+An open source simple terminal rendering library for c++. (C++ 23)
 
 ## License
 
