@@ -33,6 +33,7 @@ int main() {
                 .pixel='+',
         });
 
+
         screen.draw();
         screen.swapBuffers();
         usleep(1000000 / 60); // 60 fps
