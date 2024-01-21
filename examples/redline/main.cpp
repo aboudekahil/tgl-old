@@ -8,6 +8,7 @@ int main() {
 
 
     tgl::Screen screen;
+
     tgl::Screen::hideCursor();
 
     int i = 0;
@@ -47,6 +48,7 @@ int main() {
         usleep(1000000 / 60); // 60 fps
         i++;
     }
+
 
     tgl::Screen::showCursor();
     return 0;

@@ -32,24 +32,23 @@ namespace tgl {
 
     Screen::Screen()
             : _term_size(get_term_size()),
-              buffer(_term_size.height, std::vector<TPixel>(_term_size.width)),
-              buffer2(_term_size.height, std::vector<TPixel>(_term_size.width)) {}
+              buffer(_term_size.width, _term_size.height),
+              buffer2(_term_size.width, _term_size.height) {}
 
     Screen::Screen(size_t width, size_t height)
             : _term_size({.width = width, .height = height}),
-              buffer(_term_size.height, std::vector<TPixel>(_term_size.width)),
-              buffer2(_term_size.height, std::vector<TPixel>(_term_size.width)) {}
+              buffer(_term_size.width, _term_size.height),
+              buffer2(_term_size.width, _term_size.height) {}
 
     void Screen::fill(const TPixel &pixel) {
-        buffer = std::vector<std::vector<TPixel>>(
-                _term_size.height, std::vector<TPixel>(_term_size.width, pixel));
+        buffer.setAll(pixel);
     }
 
     void Screen::drawBuffer() const {
         internal::cursor_to(0, 0);
-        for (size_t i = 0; i < _term_size.height; i++) {
-            for (size_t j = 0; j < _term_size.width; j++) {
-                auto pix = buffer[i][j];
+        for (size_t i = 0; i < buffer.height(); i++) {
+            for (size_t j = 0; j < buffer.width(); j++) {
+                auto pix = buffer[i, j];
                 std::cout << pix.bg << pix.fg << pix.pixel;
             }
             std::cout << (i == _term_size.height - 1 ? '\0' : '\n');
@@ -66,9 +65,7 @@ namespace tgl {
     }
 
     void Screen::draw() {
-#if !defined(DEBUG)
         drawBuffer();
-#endif
     }
 
     void Screen::drawLine(float x1, float y1, float x2, float y2, const TPixel &pixel) {
@@ -142,10 +139,10 @@ namespace tgl {
     }
 
     void Screen::putPixel(size_t x, size_t y, const TPixel &pixel) {
-        if (x >= buffer[0].size() || y >= buffer.size())
+        if (x >= buffer.width() || y >= buffer.height())
             return;
 
-        buffer[y][x] = pixel;
+        buffer[y, x] = pixel;
     }
 
 }

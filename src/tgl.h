@@ -8,15 +8,14 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED
+ * "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+ * LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  * @author
  * ABOUDE KAHIL
@@ -27,46 +26,46 @@
  * @headerfile
  * This file is for the user interface. Everything here is meant to be used
  * by the whoever is interacting with the code.
-*/
+ */
 
 #ifndef TGL_TGL_H
 #define TGL_TGL_H
 
-#include <iostream>
-#include <vector>
-#include "internal/internal.h"
 #include "colors/tgl_colors.h"
+#include "internal/internal.h"
+#include "ds/matspan.h"
+#include <iostream>
 
 using namespace tgl::internal;
 
 namespace tgl {
 
-    /**
-     * @struct
-     * TPixel is the "pixel" of the terminal, each pixel has a character
-     * representation, a foreground color and a background color.
-     *
-     * @example
-     * @code
-     * using namespace tgl;
-     * auto red_black_a = TPixel{
-     *  .fg=colors::FG::BLACK,
-     *  .bg=colors::BG:RED,
-     *  .pixel='a'
-     *  }; // red background black text with 'a' character pixel.
-     * @endcode
-     */
+/**
+ * @struct
+ * TPixel is the "pixel" of the terminal, each pixel has a character
+ * representation, a foreground color and a background color.
+ *
+ * @example
+ * @code
+ * using namespace tgl;
+ * auto red_black_a = TPixel{
+ *  .fg=colors::FG::BLACK,
+ *  .bg=colors::BG:RED,
+ *  .pixel='a'
+ *  }; // red background black text with 'a' character pixel.
+ * @endcode
+ */
     typedef struct {
         colors::FG fg;
         colors::BG bg;
         char pixel;
     } TPixel;
 
-    /**
-     * @class
-     * Screen class is supposed to be your interface towards everything
-     * rendering.
-     */
+/**
+ * @class
+ * Screen class is supposed to be your interface towards everything
+ * rendering.
+ */
     class Screen {
     public:
         /**
@@ -149,16 +148,14 @@ namespace tgl {
          * @return
          * Width of screen.
          */
-        [[nodiscard]]
-        size_t width() const;
+        [[nodiscard]] size_t width() const;
 
         /**
          * @method
          * @return
          * Height of screen.
          */
-        [[nodiscard]]
-        size_t height() const;
+        [[nodiscard]] size_t height() const;
 
         /**
          * @method
@@ -177,7 +174,8 @@ namespace tgl {
          * @param y2 The ending y position for the line.
          * @param pixel The pixel the line will be filled with.
          */
-        void drawStraightLine(float x1, float y1, float x2, float y2, const TPixel &pixel);
+        void drawStraightLine(float x1, float y1, float x2, float y2,
+                              const TPixel &pixel);
 
         /**
          * @method
@@ -196,11 +194,10 @@ namespace tgl {
         void drawBuffer() const;
 
         wsize_t _term_size;
-        std::vector<std::vector<TPixel>> buffer;
-        std::vector<std::vector<TPixel>> buffer2;
-
+        ds::matspan<TPixel> buffer;
+        ds::matspan<TPixel> buffer2;
     };
 
 } // namespace tgl
 
-#endif //TGL_TGL_H
+#endif // TGL_TGL_H
