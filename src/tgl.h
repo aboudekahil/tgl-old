@@ -75,6 +75,7 @@ namespace tgl {
          * @param width
          * @param height
          */
+        [[maybe_unused]]
         Screen(size_t width, size_t height);
 
         /**
@@ -163,6 +164,15 @@ namespace tgl {
          */
         void swapBuffers();
 
+        /**
+         * @method
+         *
+         * getter to check if the cursor is visible or not.
+         *
+         * @return
+         */
+        [[nodiscard]] static bool isCursorVisible();
+
     private:
         /**
          * @method
@@ -189,13 +199,15 @@ namespace tgl {
 
         /**
          * @method
-         * Draws the current buffer on the screen.
+         * Draws the current m_buffer on the screen.
          */
         void drawBuffer() const;
 
-        wsize_t _term_size;
-        ds::matspan<TPixel> buffer;
-        ds::matspan<TPixel> buffer2;
+        wsize_t m_term_size;
+        ds::matspan<TPixel> m_buffer;
+        ds::matspan<TPixel> m_buffer2;
+
+        static bool m_isCursorVisible;
     };
 
 } // namespace tgl

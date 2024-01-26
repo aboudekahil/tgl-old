@@ -20,7 +20,7 @@ int main() {
 
 
         // Red rect -------------------------------------
-        screen.drawRect(screen.width() / 3, screen.height() / 4, 10, 10, TPixel{
+        screen.drawRect(static_cast<float>(screen.width()) / 3, static_cast<float>(screen.height()) / 4, 10, 10, TPixel{
                 .fg=colors::FG::RED,
                 .bg=colors::BG::BLACK,
                 .pixel='@',
