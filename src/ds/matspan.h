@@ -38,16 +38,46 @@
 
 namespace tgl::ds {
 
+    /**
+     * @class
+     * Matspan is a 2d list abstraction used to create a continuous span of elements in
+     * memory to be represented as a 2d array interface.
+     *
+     * @tparam T Type of element
+     */
     template<typename T>
     class matspan {
     public:
+        /**
+         * @constructor
+         *
+         * no-arg constructor initializes array size to 0.
+         */
         explicit matspan() : _width(0), _height(0), arr(nullptr), _size(0) {
         }
 
+        /**
+         * @constructor
+         *
+         * with-arg constructor initializes 2d array to width and column parameters.
+         *
+         * @param width columns count
+         * @param height rows count
+         */
         matspan(size_t width, size_t height)
                 : _width(width), _height(height), arr(new T[width * height]), _size(width * height) {
         }
 
+        /**
+         * @constructor
+         *
+         * with-arg constructor initializes 2d array to width and column parameters.
+         * Also initializes every element to defaultVal.
+         *
+         * @param width
+         * @param height
+         * @param defaultVal
+         */
         matspan(size_t width, size_t height, const T &defaultVal)
                 : _width(width), _height(height), arr(new T[width * height]), _size(width * height) {
 
@@ -56,11 +86,33 @@ namespace tgl::ds {
             }
         }
 
+        /**
+         * @constructor
+         *
+         * move-constructor
+         *
+         * @param other
+         */
         matspan(matspan<T> &&other) noexcept:
                 _width(other._width), _height(other._height), arr(other.arr), _size(other.size()) {
             other.arr = nullptr;
         }
 
+        /**
+         * @destructor
+         */
+        ~matspan() {
+            delete[] arr;
+        }
+
+        /**
+         * @operator
+         *
+         * copy assignment operator
+         *
+         * @param other
+         * @return
+         */
         matspan<T> &operator=(const matspan<T> &other) {
             if (this == &other) return *this;
 
@@ -75,6 +127,14 @@ namespace tgl::ds {
             return *this;
         }
 
+        /**
+         * @operator
+         *
+         * move assignment operator
+         *
+         * @param other
+         * @return
+         */
         matspan<T> &operator=(matspan<T> &&other) noexcept {
             if (this == &other) return *this;
             _width = other._width;
@@ -88,32 +148,99 @@ namespace tgl::ds {
             return *this;
         }
 
+        /**
+         * @operator
+         *
+         * returns a reference to the element in the i-th row and j-th column.
+         *
+         * @param i
+         * @param j
+         * @return reference to the element
+         */
         T &operator[](size_t i, size_t j) {
             return arr[j * _height + i];
         }
 
+        /**
+         * @operator
+         *
+         * returns a copy of the element in the i-th row and j-th column.
+         *
+         * @param i
+         * @param j
+         * @return copy of the value of the element
+         */
         T operator[](size_t i, size_t j) const {
             return arr[j * _height + i];
         }
 
+        /**
+         * @method
+         *
+         * returns a reference to the element in the i-th row and j-th column.
+         *
+         * @param i
+         * @param j
+         * @return reference to the element
+         */
+        T &get(size_t i, size_t j) {
+            return arr[j * _height + i];
+        }
+
+        /**
+         * @method
+         *
+         * returns a copy of the element in the i-th row and j-th column.
+         *
+         * @param i
+         * @param j
+         * @return copy of the value of the element
+         */
+        T get(size_t i, size_t j) const {
+            return arr[j * _height + i];
+        }
+
+        /**
+         * @method
+         *
+         * set all the elements in the array to the value passed in.
+         * @param content
+         */
         void setAll(T content) {
             for (size_t i = 0; i < _size; ++i) {
                 arr[i] = content;
             }
         }
 
-        ~matspan() {
-            delete[] arr;
-        }
-
+        /**
+         * @method
+         *
+         * getter for the size of the 1d array representing the 2d array.
+         *
+         * @return size of the 1d array
+         */
         [[nodiscard]] size_t size() const {
             return _size;
         }
 
+        /**
+         * @method
+         *
+         * getter for the columns count of the 2d array.
+         *
+         * @return columns count of the 2d array
+         */
         [[nodiscard]] size_t width() const {
             return _width;
         }
 
+        /**
+         * @method
+         *
+         * getter for the rows count of the 2d array.
+         *
+         * @return rows count of the 2d array
+         */
         [[nodiscard]] size_t height() const {
             return _height;
         }

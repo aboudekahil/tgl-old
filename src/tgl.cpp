@@ -30,34 +30,42 @@
 
 namespace tgl {
 
+    bool Screen::m_isCursorVisible = true;
+
     Screen::Screen()
-            : _term_size(get_term_size()),
-              buffer(_term_size.width, _term_size.height),
-              buffer2(_term_size.width, _term_size.height) {}
+            : m_term_size(get_term_size()),
+              m_buffer(m_term_size.width, m_term_size.height),
+              m_buffer2(m_term_size.width, m_term_size.height) {}
 
     Screen::Screen(size_t width, size_t height)
-            : _term_size({.width = width, .height = height}),
-              buffer(_term_size.width, _term_size.height),
-              buffer2(_term_size.width, _term_size.height) {}
+            : m_term_size({.width = width, .height = height}),
+              m_buffer(m_term_size.width, m_term_size.height),
+              m_buffer2(m_term_size.width, m_term_size.height) {}
 
     void Screen::fill(const TPixel &pixel) {
-        buffer.setAll(pixel);
+        m_buffer.setAll(pixel);
     }
 
     void Screen::drawBuffer() const {
         internal::cursor_to(0, 0);
-        for (size_t i = 0; i < buffer.height(); i++) {
-            for (size_t j = 0; j < buffer.width(); j++) {
-                auto pix = buffer[i, j];
+        for (size_t i = 0; i < m_buffer.height(); i++) {
+            for (size_t j = 0; j < m_buffer.width(); j++) {
+                auto pix = m_buffer.get(i, j);
                 std::cout << pix.bg << pix.fg << pix.pixel;
             }
-            std::cout << (i == _term_size.height - 1 ? '\0' : '\n');
+            std::cout << (i == m_term_size.height - 1 ? '\0' : '\n');
         }
     }
 
-    void Screen::hideCursor() { internal::hide_cursor(); }
+    void Screen::hideCursor() {
+        internal::hide_cursor();
+        m_isCursorVisible = false;
+    }
 
-    void Screen::showCursor() { internal::show_cursor(); }
+    void Screen::showCursor() {
+        internal::show_cursor();
+        m_isCursorVisible = true;
+    }
 
     void Screen::drawPixel(float x, float y, const TPixel &pixel) {
         int ix = static_cast<int>(x), iy = static_cast<int>(y);
@@ -111,15 +119,15 @@ namespace tgl {
     }
 
     size_t Screen::width() const {
-        return _term_size.width;
+        return m_term_size.width;
     }
 
     size_t Screen::height() const {
-        return _term_size.height;
+        return m_term_size.height;
     }
 
     void Screen::swapBuffers() {
-        std::swap(buffer, buffer2);
+        std::swap(m_buffer, m_buffer2);
     }
 
     void Screen::drawStraightLine(float x1, float y1, float x2, float y2, const TPixel &pixel) {
@@ -139,10 +147,13 @@ namespace tgl {
     }
 
     void Screen::putPixel(size_t x, size_t y, const TPixel &pixel) {
-        if (x >= buffer.width() || y >= buffer.height())
+        if (x >= m_buffer.width() || y >= m_buffer.height())
             return;
 
-        buffer[y, x] = pixel;
+        m_buffer.get(y, x) = pixel;
     }
 
+    bool Screen::isCursorVisible() {
+        return m_isCursorVisible;
+    }
 }
