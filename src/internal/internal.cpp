@@ -58,15 +58,14 @@ namespace tgl::internal {
     void hide_cursor() {
 #if defined(__WIN32__) || defined(_WIN32) || _WIN32
 
-        HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-        if (consoleHandle == INVALID_HANDLE_VALUE) {
-            return; // Handle error appropriately
-        }
+        HANDLE hStdOut = nullptr;
+        CONSOLE_CURSOR_INFO curInfo;
 
-        CONSOLE_CURSOR_INFO info = {0};
-        info.dwSize = 100;  // The size of the cursor, from 1 to 100. The default is 25.
-        info.bVisible = FALSE;  // Set the cursor visibility to FALSE (hidden)
-        SetConsoleCursorInfo(consoleHandle, &info);
+        hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+        GetConsoleCursorInfo(hStdOut, &curInfo);
+        curInfo.bVisible = FALSE;
+        SetConsoleCursorInfo(hStdOut, &curInfo);
+        std::cout << "\033[?25l";
 
 #elif defined(linux) || defined(__unix__)
 

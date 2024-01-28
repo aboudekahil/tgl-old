@@ -146,6 +146,18 @@ namespace tgl {
 
         /**
          * @method
+         * Draws an ellipse of position (x, y) with r1 and r2 being its radii.
+         *
+         * @param x The starting x position for the ellipse.
+         * @param y The starting y position for the ellipse.
+         * @param r1 The r1 radius of the ellipse.
+         * @param r2 The r2 radius of the ellipse
+         * @param pixel The pixels the ellipse will be outlined with.
+         */
+        void drawEllipse(float x, float y, float r1, float r2, const TPixel &pixel);
+
+        /**
+         * @method
          * @return
          * Width of screen.
          */

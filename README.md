@@ -19,16 +19,19 @@ Available examples:
 - `redline/`: A big red line rendered from top left ot bottom right,
   with a green triangle intersecting with the line.
 - `rectangle/`: 2 rectangles
+- `bubbles/`: Shows a bunch of bubbles moving in the screen.
 
 ## Screenshots
 
 ![App Screenshot](./screenshots/Triangle.png)
 ![App Screenshot](./screenshots/Rectangle.png)
+![App Screenshot](./screenshots/Bubbles.png)
 
 ## Features
 
 - draw pixel
 - draw line
+- draw ellipse
 - draw rectangle
 - swap buffers
 

@@ -156,4 +156,74 @@ namespace tgl {
     bool Screen::isCursorVisible() {
         return m_isCursorVisible;
     }
+
+    void Screen::drawEllipse(float x, float y, float r1, float r2, const TPixel &pixel) {
+        int wx, wy;
+        int thresh;
+        int asq = r1 * r1;
+        int bsq = r2 * r2;
+        int xa, ya;
+
+        putPixel(x, y + r2, pixel);
+        putPixel(x, y - r2, pixel);
+
+        wx = 0;
+        wy = r2;
+        xa = 0;
+        ya = asq * 2 * r2;
+        thresh = asq / 4 - asq * r2;
+
+        for (;;) {
+            thresh += xa + bsq;
+
+            if (thresh >= 0) {
+                ya -= asq * 2;
+                thresh -= ya;
+                wy--;
+            }
+
+            xa += bsq * 2;
+            wx++;
+
+            if (xa >= ya)
+                break;
+
+
+            putPixel(x + wx, y - wy, pixel);
+            putPixel(x - wx, y - wy, pixel);
+            putPixel(x + wx, y + wy, pixel);
+            putPixel(x - wx, y + wy, pixel);
+        }
+
+        putPixel(x + r1, y, pixel);
+        putPixel(x - r1, y, pixel);
+
+        wx = r1;
+        wy = 0;
+        xa = bsq * 2 * r1;
+
+        ya = 0;
+        thresh = bsq / 4 - bsq * r1;
+
+        for (;;) {
+            thresh += ya + asq;
+
+            if (thresh >= 0) {
+                xa -= bsq * 2;
+                thresh = thresh - xa;
+                wx--;
+            }
+
+            ya += asq * 2;
+            wy++;
+
+            if (ya > xa)
+                break;
+
+            putPixel(x + wx, y - wy, pixel);
+            putPixel(x - wx, y - wy, pixel);
+            putPixel(x + wx, y + wy, pixel);
+            putPixel(x - wx, y + wy, pixel);
+        }
+    }
 }
