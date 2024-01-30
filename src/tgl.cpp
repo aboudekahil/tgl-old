@@ -26,6 +26,7 @@
 */
 
 #include <cmath>
+#include <sstream>
 #include "tgl.h"
 
 namespace tgl {
@@ -48,13 +49,23 @@ namespace tgl {
 
     void Screen::drawBuffer() const {
         internal::cursor_to(0, 0);
-        for (size_t i = 0; i < m_buffer.height(); i++) {
+
+        std::stringstream ss;
+
+        for (size_t i = 0; i < m_buffer.height() - 1; i++) {
             for (size_t j = 0; j < m_buffer.width(); j++) {
                 auto pix = m_buffer.get(i, j);
-                std::cout << pix.bg << pix.fg << pix.pixel;
+                ss << pix.bg << pix.fg << pix.pixel;
             }
-            std::cout << (i == m_term_size.height - 1 ? '\0' : '\n');
+            ss << '\n';
         }
+
+        for (size_t j = 0; j < m_buffer.width(); j++) {
+            auto pix = m_buffer.get(m_buffer.height() - 1, j);
+            ss << pix.bg << pix.fg << pix.pixel;
+        }
+
+        std::cout << ss.str();
     }
 
     void Screen::hideCursor() {

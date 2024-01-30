@@ -1,7 +1,8 @@
 #include "../../src/tgl.h"
 #include <cmath>
 #include <vector>
-#include <random>
+#include <chrono>
+#include <thread>
 
 using namespace tgl;
 
@@ -61,11 +62,11 @@ int main() {
         }
 
         for (auto &item: group) {
-            if (item.x<item.r || item.x>(screen.width() - item.r)) {
+            if (item.x < item.r || item.x > (screen.width() - item.r)) {
                 item.vx *= -1;
             }
 
-            if (item.y<item.r2 || item.y>(screen.height() - item.r2)) {
+            if (item.y < item.r2 || item.y > (screen.height() - item.r2)) {
                 item.vy *= -1;
             }
         }
@@ -77,7 +78,7 @@ int main() {
 
         screen.draw();
         screen.swapBuffers();
-        usleep(1000000 / 24);
+        std::this_thread::sleep_for(std::chrono::microseconds(1000000 / 24));
     }
 
     tgl::Screen::showCursor();
