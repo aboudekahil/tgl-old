@@ -47,6 +47,14 @@ namespace tgl {
         m_buffer.setAll(pixel);
     }
 
+    void Screen::fill(colors::FG fg, colors::BG bg, char pixel) {
+        fill(TPixel{
+                .fg=fg,
+                .bg=bg,
+                .pixel=pixel
+        });
+    }
+
     void Screen::drawBuffer() const {
         internal::cursor_to(0, 0);
 
@@ -78,13 +86,21 @@ namespace tgl {
         m_isCursorVisible = true;
     }
 
+    void Screen::draw() {
+        drawBuffer();
+    }
+
     void Screen::drawPixel(float x, float y, const TPixel &pixel) {
         int ix = static_cast<int>(x), iy = static_cast<int>(y);
         putPixel(ix, iy, pixel);
     }
 
-    void Screen::draw() {
-        drawBuffer();
+    void Screen::drawPixel(float x, float y, colors::FG fg, colors::BG bg, char pixel) {
+        drawPixel(x, y, TPixel{
+                .fg=fg,
+                .bg=bg,
+                .pixel=pixel
+        });
     }
 
     void Screen::drawLine(float x1, float y1, float x2, float y2, const TPixel &pixel) {
@@ -122,11 +138,132 @@ namespace tgl {
         }
     }
 
+    void Screen::drawLine(float x1, float y1, float x2, float y2, colors::FG fg, colors::BG bg, char pixel) {
+        drawLine(x1, y1, x2, y2, TPixel{
+                .fg=fg,
+                .bg=bg,
+                .pixel=pixel
+        });
+    }
+
     void Screen::drawRect(float x, float y, float w, float h, const TPixel &pixel) {
         drawStraightLine(x, y, x + w, y, pixel);
         drawStraightLine(x, y, x, y + h, pixel);
         drawStraightLine(x, y + h, x + w, y + h, pixel);
         drawStraightLine(x + w, y, x + w, y + h, pixel);
+    }
+
+    void Screen::drawRect(float x, float y, float w, float h, colors::FG fg, colors::BG bg, char pixel) {
+        drawRect(x, y, w, h, TPixel{
+                .fg=fg,
+                .bg=bg,
+                .pixel=pixel
+        });
+    }
+
+    void Screen::drawFilledRect(float x, float y, float w, float h, const TPixel &pixel) {
+        for (int dy = 0; dy <= static_cast<int>(h); ++dy) {
+            int yc = static_cast<int>(y) + dy;
+            for (int dx = 0; dx <= static_cast<int>(w); ++dx) {
+                int xc = static_cast<int>(x) + dx;
+                putPixel(xc, yc, pixel);
+            }
+        }
+    }
+
+    void Screen::drawFilledRect(float x, float y, float w, float h, colors::FG fg, colors::BG bg, char pixel) {
+        drawFilledRect(x, y, w, h, TPixel{
+                .fg=fg,
+                .bg=bg,
+                .pixel=pixel
+        });
+    }
+
+    void Screen::drawEllipse(float x, float y, float r1, float r2, const TPixel &pixel) {
+        int wx, wy;
+        int thresh;
+        int asq = static_cast<int>(r1 * r1);
+        int bsq = static_cast<int>(r2 * r2);
+        int xa, ya;
+        int ix = static_cast<int>(x), iy = static_cast<int>(y);
+        int ir1 = static_cast<int>(r1), ir2 = static_cast<int>(r2);
+
+        putPixel(ix, static_cast<int>(y + r2), pixel);
+        putPixel(ix, static_cast<int>(y - r2), pixel);
+
+        wx = 0;
+        wy = ir2;
+        xa = 0;
+        ya = asq * static_cast<int>(2 * r2);
+        thresh = static_cast<int>(static_cast<float>(asq) / 4 - static_cast<float>(asq) * r2);
+
+        for (;;) {
+            thresh += xa + bsq;
+
+            if (thresh >= 0) {
+                ya -= asq * 2;
+                thresh -= ya;
+                wy--;
+            }
+
+            xa += bsq * 2;
+            wx++;
+
+            if (xa >= ya)
+                break;
+
+
+            putPixel(ix + wx, iy - wy, pixel);
+            putPixel(ix - wx, iy - wy, pixel);
+            putPixel(ix + wx, iy + wy, pixel);
+            putPixel(ix - wx, iy + wy, pixel);
+        }
+
+        putPixel(static_cast<int>(x + r1), iy, pixel);
+        putPixel(static_cast<int>(x - r1), iy, pixel);
+
+        wx = ir1;
+        wy = 0;
+        xa = static_cast<int>(static_cast<float>(bsq) * 2 * r1);
+
+        ya = 0;
+        thresh = static_cast<int>(static_cast<float >(bsq) / 4 - static_cast<float>(bsq) * r1);
+
+        for (;;) {
+            thresh += ya + asq;
+
+            if (thresh >= 0) {
+                xa -= bsq * 2;
+                thresh = thresh - xa;
+                wx--;
+            }
+
+            ya += asq * 2;
+            wy++;
+
+            if (ya > xa)
+                break;
+
+            putPixel(ix + wx, iy - wy, pixel);
+            putPixel(ix - wx, iy - wy, pixel);
+            putPixel(ix + wx, iy + wy, pixel);
+            putPixel(ix - wx, iy + wy, pixel);
+        }
+    }
+
+    void Screen::drawEllipse(float x, float y, float r1, float r2, colors::FG fg, colors::BG bg, char pixel) {
+        drawEllipse(x, y, r1, r2, TPixel{
+                .fg=fg,
+                .bg=bg,
+                .pixel=pixel
+        });
+    }
+
+    void Screen::putPixel(size_t x, size_t y, const TPixel &pixel) {
+        if (x >= m_buffer.width() || y >= m_buffer.height())
+            return;
+
+        m_buffer.get(y, x) = pixel;
     }
 
     size_t Screen::width() const {
@@ -157,84 +294,7 @@ namespace tgl {
         }
     }
 
-    void Screen::putPixel(size_t x, size_t y, const TPixel &pixel) {
-        if (x >= m_buffer.width() || y >= m_buffer.height())
-            return;
-
-        m_buffer.get(y, x) = pixel;
-    }
-
     bool Screen::isCursorVisible() {
         return m_isCursorVisible;
-    }
-
-    void Screen::drawEllipse(float x, float y, float r1, float r2, const TPixel &pixel) {
-        int wx, wy;
-        int thresh;
-        int asq = r1 * r1;
-        int bsq = r2 * r2;
-        int xa, ya;
-
-        putPixel(x, y + r2, pixel);
-        putPixel(x, y - r2, pixel);
-
-        wx = 0;
-        wy = r2;
-        xa = 0;
-        ya = asq * 2 * r2;
-        thresh = asq / 4 - asq * r2;
-
-        for (;;) {
-            thresh += xa + bsq;
-
-            if (thresh >= 0) {
-                ya -= asq * 2;
-                thresh -= ya;
-                wy--;
-            }
-
-            xa += bsq * 2;
-            wx++;
-
-            if (xa >= ya)
-                break;
-
-
-            putPixel(x + wx, y - wy, pixel);
-            putPixel(x - wx, y - wy, pixel);
-            putPixel(x + wx, y + wy, pixel);
-            putPixel(x - wx, y + wy, pixel);
-        }
-
-        putPixel(x + r1, y, pixel);
-        putPixel(x - r1, y, pixel);
-
-        wx = r1;
-        wy = 0;
-        xa = bsq * 2 * r1;
-
-        ya = 0;
-        thresh = bsq / 4 - bsq * r1;
-
-        for (;;) {
-            thresh += ya + asq;
-
-            if (thresh >= 0) {
-                xa -= bsq * 2;
-                thresh = thresh - xa;
-                wx--;
-            }
-
-            ya += asq * 2;
-            wy++;
-
-            if (ya > xa)
-                break;
-
-            putPixel(x + wx, y - wy, pixel);
-            putPixel(x - wx, y - wy, pixel);
-            putPixel(x + wx, y + wy, pixel);
-            putPixel(x - wx, y + wy, pixel);
-        }
     }
 }

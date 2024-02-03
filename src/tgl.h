@@ -40,21 +40,21 @@ using namespace tgl::internal;
 
 namespace tgl {
 
-/**
- * @struct
- * TPixel is the "pixel" of the terminal, each pixel has a character
- * representation, a foreground color and a background color.
- *
- * @example
- * @code
- * using namespace tgl;
- * auto red_black_a = TPixel{
- *  .fg=colors::FG::BLACK,
- *  .bg=colors::BG:RED,
- *  .pixel='a'
- *  }; // red background black text with 'a' character pixel.
- * @endcode
- */
+    /**
+     * @struct
+     * TPixel is the "pixel" of the terminal, each pixel has a character
+     * representation, a foreground color and a background color.
+     *
+     * @example
+     * @code
+     * using namespace tgl;
+     * auto red_black_a = TPixel{
+     *  .fg=colors::FG::BLACK,
+     *  .bg=colors::BG:RED,
+     *  .pixel='a'
+     *  }; // red background black text with 'a' character pixel.
+     * @endcode
+     */
     typedef struct {
         colors::FG fg;
         colors::BG bg;
@@ -94,6 +94,13 @@ namespace tgl {
 
         /**
          * @method
+         * Fill the entire screen with a certain pixel.
+         * @param pixel The pixel the screen will be filled with.
+         */
+        void fill(colors::FG fg, colors::BG bg, char pixel);
+
+        /**
+         * @method
          * Hides the terminal cursor.
          */
         static void hideCursor();
@@ -103,6 +110,12 @@ namespace tgl {
          * Shows the terminal cursor.
          */
         static void showCursor();
+
+        /**
+         * @method
+         * Render your pixels on the terminal.
+         */
+        void draw();
 
         /**
          * @method
@@ -116,9 +129,13 @@ namespace tgl {
 
         /**
          * @method
-         * Render your pixels on the terminal.
+         * Draws a pixel on a certain position in the screen.
+         *
+         * @param x the pixel's x position.
+         * @param y the pixel's y position.
+         * @param pixel the pixel that will be drawn.
          */
-        void draw();
+        void drawPixel(float x, float y, colors::FG fg, colors::BG bg, char pixel);
 
         /**
          * @method
@@ -134,6 +151,18 @@ namespace tgl {
 
         /**
          * @method
+         * Draws a line in the terminal from point (x1, y1) to (x2, y2).
+         *
+         * @param x1 The starting x position for the line.
+         * @param y1 The starting y position for the line.
+         * @param x2 The ending x position for the line.
+         * @param y2 The ending y position for the line.
+         * @param pixel The pixel the line will be filled with.
+         */
+        void drawLine(float x1, float y1, float x2, float y2, colors::FG fg, colors::BG bg, char pixel);
+
+        /**
+         * @method
          * Draws a rectangle of position (x, y) with width w and height h.
          *
          * @param x The starting x position for the rectangle.
@@ -146,6 +175,42 @@ namespace tgl {
 
         /**
          * @method
+         * Draws a rectangle of position (x, y) with width w and height h.
+         *
+         * @param x The starting x position for the rectangle.
+         * @param y The starting y position for the rectangle.
+         * @param w The width of the rectangle.
+         * @param h The height of the rectangle.
+         * @param pixel The pixels the rect will be outlined with.
+         */
+        void drawRect(float x, float y, float w, float h, colors::FG fg, colors::BG bg, char pixel);
+
+        /**
+         * @method
+         * Draws a filled rectangle of position (x, y) with width w and height h.
+         *
+         * @param x The starting x position for the rectangle.
+         * @param y The starting y position for the rectangle.
+         * @param w The width of the rectangle.
+         * @param h The height of the rectangle.
+         * @param pixel The pixels the rect will be outlined with.
+         */
+        void drawFilledRect(float x, float y, float w, float h, const TPixel &pixel);
+
+        /**
+         * @method
+         * Draws a filled rectangle of position (x, y) with width w and height h.
+         *
+         * @param x The starting x position for the rectangle.
+         * @param y The starting y position for the rectangle.
+         * @param w The width of the rectangle.
+         * @param h The height of the rectangle.
+         * @param pixel The pixels the rect will be outlined with.
+         */
+        void drawFilledRect(float x, float y, float w, float h, colors::FG fg, colors::BG bg, char pixel);
+
+        /**
+         * @method
          * Draws an ellipse of position (x, y) with r1 and r2 being its radii.
          *
          * @param x The starting x position for the ellipse.
@@ -155,6 +220,18 @@ namespace tgl {
          * @param pixel The pixels the ellipse will be outlined with.
          */
         void drawEllipse(float x, float y, float r1, float r2, const TPixel &pixel);
+
+        /**
+         * @method
+         * Draws an ellipse of position (x, y) with r1 and r2 being its radii.
+         *
+         * @param x The starting x position for the ellipse.
+         * @param y The starting y position for the ellipse.
+         * @param r1 The r1 radius of the ellipse.
+         * @param r2 The r2 radius of the ellipse
+         * @param pixel The pixels the ellipse will be outlined with.
+         */
+        void drawEllipse(float x, float y, float r1, float r2, colors::FG fg, colors::BG bg, char pixel);
 
         /**
          * @method
@@ -220,6 +297,7 @@ namespace tgl {
         ds::matspan<TPixel> m_buffer2;
 
         static bool m_isCursorVisible;
+
     };
 
 } // namespace tgl

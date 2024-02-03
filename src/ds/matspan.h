@@ -206,10 +206,18 @@ namespace tgl::ds {
          * set all the elements in the array to the value passed in.
          * @param content
          */
-        void setAll(T content) {
-            for (size_t i = 0; i < _size; ++i) {
-                arr[i] = content;
-            }
+        void setAll(const T& content) {
+            std::fill(arr, arr + _size, content);
+        }
+
+        /**
+         * @method
+         *
+         * set all the elements in the array to the value passed in.
+         * @param content
+         */
+        void setAll(T&& content) {
+            std::fill(arr, arr + _size, std::move(content));
         }
 
         /**
