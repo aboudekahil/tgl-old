@@ -5,6 +5,8 @@ An open source simple terminal rendering library for c++. (C++ 23)
 > [!CAUTION]
 > This project is still at an early stage of development and is not ready for production use.
 
+Moved to [https://github.com/aboudekahil/tgl](https://github.com/aboudekahil/tgl)
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
